@@ -1,2 +1,2 @@
-GARMIN_BEARER=  # Garmin authentication Bearer
-GARMIN_JWT= # Used in cookie.JWT_FGP
+GARMIN_USER =  # Garmin user
+GARMIN_PASSWORD = # Garmin password
