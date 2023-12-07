@@ -1,9 +1,11 @@
+mod client;
 mod garmin;
 
 use clap::Parser;
 use dotenv::dotenv;
+use garmin::RaceParams;
 
-use crate::garmin::GarminClient;
+use crate::client::GarminClient;
 
 #[derive(Parser)]
 struct Cli {
@@ -25,6 +27,18 @@ async fn main() {
         bearer: std::env::var("GARMIN_BEARER").expect("GARMIN_BEARER must be set."),
     };
 
-    garmin::login(&mut client).await;
-    garmin::load_races(client).await;
+    client::login(&mut client).await;
+
+    // TODO: iterate over all the races
+    let races = garmin::load_races(
+        client,
+        RaceParams {
+            search: "regata".to_string(),
+            start: 0,
+            limit: 100,
+        },
+    )
+    .await;
+
+    println!("{:?}", races);
 }
